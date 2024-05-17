@@ -14,6 +14,7 @@ export const MeasurementTable = pgTable("measurement",{
     createdAt: timestamp('createdAt').defaultNow(),
     updatedAt: timestamp('updatedAt').defaultNow(),
 
+    measurementNumber: numeric('measurementNumber'),
     topValue: numeric('topValue'),
     bottomValue: numeric('bottomValue'),
 
