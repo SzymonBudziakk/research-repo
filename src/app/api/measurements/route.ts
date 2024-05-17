@@ -7,21 +7,25 @@ export async function POST(req: Request) {
         const res = await req.json()
 
         const testId = parseInt(res.testId)
-        const bottomValue = parseInt(res.bottomValue)
-        const topValue = parseInt(res.topValue)
         const measurementNumber = parseInt(res.measurementNumber)
 
-        const measurement = await db.insert(MeasurementTable).values({
-            // @ts-ignore
-            topValue, bottomValue, testId, measurementNumber})
 
-        if (!measurement) {
-            return NextResponse.json({ success: false, message: 'BLAD' , data: 'BLAD DATA' });
+        const bottomValue = res.bottomValue
+        const topValue = res.topValue
+
+        const n = bottomValue.length
+        for (let i = 0; i < n; i++) {
+
+            // @ts-ignore
+            const measurement = await db.insert(MeasurementTable).values({topValue: parseInt(topValue[i]), bottomValue: parseInt(bottomValue[i]), testId, measurementNumber})
+
+            console.log('POSTING MEASUREMENT')
         }
+
 
         return new NextResponse('', {status: 200});
     } catch (error) {
         console.log(error);
-        return new NextResponse('[FAILED_TO_POST_MEASUREMENT]', {status: 400});
+        return new NextResponse('[FAILED_TO_POST_MEASUREMENT]', {status: 500});
     }
 }

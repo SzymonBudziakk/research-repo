@@ -5,6 +5,7 @@ export const TestTable = pgTable("test",{
     createdAt: timestamp('createdAt').defaultNow(),
     updatedAt: timestamp('updatedAt').defaultNow(),
 
+    measurementsPerRequest: integer('measurementsPerRequest').default(10),
     delay: integer('delay').default(100),
     isActive: boolean('isActive').default(true),
 })
@@ -15,8 +16,10 @@ export const MeasurementTable = pgTable("measurement",{
     updatedAt: timestamp('updatedAt').defaultNow(),
 
     measurementNumber: numeric('measurementNumber'),
+
     topValue: numeric('topValue'),
     bottomValue: numeric('bottomValue'),
 
     testId: integer('testId').references(() => TestTable.id)
 })
+
